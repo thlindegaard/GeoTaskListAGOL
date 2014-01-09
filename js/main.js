@@ -4,7 +4,8 @@ define([
     "dojo/_base/lang",
     "esri/arcgis/utils",
     "esri/IdentityManager",
-    "dojo/on"
+    "dojo/on",
+    "application/App"
 ],
 function(
     ready, 
@@ -12,7 +13,8 @@ function(
     lang,
     arcgisUtils,
     IdentityManager,
-    on
+    on,
+    App
 ) {
     return declare("", null, {
         config: {},
@@ -25,6 +27,7 @@ function(
                 this._createWebMap();
             }));
         },
+
         _mapLoaded: function() {
             // Map is ready
             console.log('map loaded');
@@ -46,7 +49,9 @@ function(
                 this.map = response.map;
                 if (this.map.loaded) {
                     // do something with the map
+                    App(this.map);
                     this._mapLoaded();
+
                 } else {
                     on.once(this.map, "load", lang.hitch(this, function() {
                         // do something with the map
